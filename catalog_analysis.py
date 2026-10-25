@@ -96,7 +96,7 @@ def format_report_line(movie):
     genres = sorted(movie["genres"])
     genres_text = ", ".join(genres)
     duration = duration_in_hours(movie["duration_min"])
-    title = movie["title"]
+    title = normalize_title(movie["title"])
     year = movie["year"]
     rating = movie["rating"]
     line = f'"{title}" ({year}) — {rating}/10, {duration}, жанры: {genres_text}'
@@ -161,12 +161,21 @@ def genres_only_in_one(movies_a, movies_b):
     return genres_a - genres_b
 
 
+def iter_high_rated(movies, min_rating=8.0):
+    for movie in movies:
+        if movie["rating"] >= min_rating:
+            yield movie
+
+
 average = average_rating(movies)
 ratings_above_average = {
     movie["title"]: movie["rating"]
     for movie in movies
     if movie["rating"] > average
 }
+
+
+total_minutes = sum(movie["duration_min"] for movie in movies if movie["rating"] > 7)
 
 
 def main():
@@ -184,6 +193,9 @@ def main():
         index = index + 1
     else:
         print("Шедевров не найдено")
+
+    for movie in iter_high_rated(movies):
+        print(format_report_line(movie))
 
 
 if __name__ == "__main__":
