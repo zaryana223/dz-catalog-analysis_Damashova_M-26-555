@@ -178,6 +178,48 @@ ratings_above_average = {
 total_minutes = sum(movie["duration_min"] for movie in movies if movie["rating"] > 7)
 
 
+def build_report(movies):
+    print("ОТЧеТ ПО КАТАЛОГУ")
+    average = average_rating(movies)
+    print(f"Средний рейтинг: {average}")
+    age_stats = catalog_age_stats(movies)
+    average_age = age_stats[2]
+    print(f"Средний возраст фильмов: {average_age} лет")
+    print()
+    print("Топ-3 фильма:")
+    top = top_n_by_rating(movies, 3)
+    for item in top:
+        title = item[0]
+        for movie in movies:
+            if movie["title"] == title:
+                line = format_report_line(movie)
+                print(f"  {line}")
+    print()
+    print("Фильмов по жанрам:")
+    counts = count_by_genre(movies)
+    items = []
+    for genre in counts:
+        pair = (genre, counts[genre])
+        items.append(pair)
+
+    def by_name(item):
+        return item[0]
+
+    def by_count(item):
+        return item[1]
+
+    items = sorted(items, key=by_name)
+    items = sorted(items, key=by_count, reverse=True)
+    for item in items:
+        genre = item[0]
+        count = item[1]
+        print(f"  {genre} — {count}")
+    print()
+    genres = sorted(all_genres(movies))
+    genres_text = ", ".join(genres)
+    print(f"Все жанры каталога: {genres_text}")
+    
+
 def main():
     print("Hello from dz-catalog-analysis-damashova-m-26-555!")
 
@@ -196,6 +238,8 @@ def main():
 
     for movie in iter_high_rated(movies):
         print(format_report_line(movie))
+
+    build_report(movies)
 
 
 if __name__ == "__main__":
