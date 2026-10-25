@@ -124,6 +124,32 @@ def top_n_by_rating(movies, n=3):
     return top
 
 
+def count_by_genre(movies):
+    counts = {}
+    for movie in movies:
+        for genre in movie["genres"]:
+            counts[genre] = counts.get(genre, 0) + 1
+    return counts
+
+
+def actor_filmography(movies):
+    films = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            if actor not in films:
+                films[actor] = []
+            films[actor].append(movie["title"])
+    return films
+
+
+average = average_rating(movies)
+ratings_above_average = {
+    movie["title"]: movie["rating"]
+    for movie in movies
+    if movie["rating"] > average
+}
+
+
 def main():
     print("Hello from dz-catalog-analysis-damashova-m-26-555!")
 
