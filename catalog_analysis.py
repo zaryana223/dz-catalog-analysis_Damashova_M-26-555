@@ -77,6 +77,32 @@ def count_long_movies(movies, threshold=120):
     return count
 
 
+def normalize_title(title):
+    words = title.split(" ")
+    new_words = []
+    for word in words:
+        new_word = word[0].upper() + word[1:]
+        new_words.append(new_word)
+    return " ".join(new_words)
+
+
+def make_slug(title):
+    slug = title.lower()
+    slug = slug.replace(" ", "-")
+    return slug
+
+
+def format_report_line(movie):
+    genres = sorted(movie["genres"])
+    genres_text = ", ".join(genres)
+    duration = duration_in_hours(movie["duration_min"])
+    title = movie["title"]
+    year = movie["year"]
+    rating = movie["rating"]
+    line = f'"{title}" ({year}) — {rating}/10, {duration}, жанры: {genres_text}'
+    return line
+
+
 def main():
     print("Hello from dz-catalog-analysis-damashova-m-26-555!")
 
