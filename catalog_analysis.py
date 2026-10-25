@@ -50,6 +50,25 @@ def duration_in_hours(minutes):
     return f"{hours}ч {mins}м"
 
 
+def rating_tier(rating):
+    if rating >= 7:
+        return "шедевр" if rating >= 9 else "хорошо"
+    elif rating >= 5:
+        return "средне"
+    else:
+        return "слабо"
+
+
+def decade_label(year):
+    match year:
+        case _ if year > 2020:
+            return "новые"
+        case _ if year >= 2015 and year <= 2020:
+            return "недавние"
+        case _ if year < 2015:
+            return "старые"
+
+
 def main():
     print("Hello from dz-catalog-analysis-damashova-m-26-555!")
 
