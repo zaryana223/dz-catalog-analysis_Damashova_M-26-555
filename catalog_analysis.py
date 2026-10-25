@@ -103,6 +103,27 @@ def format_report_line(movie):
     return line
 
 
+def movie_rating(movie):
+    return movie["rating"]
+
+
+def titles_sorted_by_rating(movies):
+    sorted_movies = sorted(movies, key=movie_rating, reverse=True)
+    titles = []
+    for movie in sorted_movies:
+        titles.append(movie["title"])
+    return titles
+
+
+def top_n_by_rating(movies, n=3):
+    sorted_movies = sorted(movies, key=movie_rating, reverse=True)
+    top = []
+    for movie in sorted_movies[:n]:
+        pair = (movie["title"], movie["rating"])
+        top.append(pair)
+    return top
+
+
 def main():
     print("Hello from dz-catalog-analysis-damashova-m-26-555!")
 
