@@ -179,7 +179,6 @@ total_minutes = sum(movie["duration_min"] for movie in movies if movie["rating"]
 
 
 def build_report(movies):
-    print("ОТЧеТ ПО КАТАЛОГУ")
     average = average_rating(movies)
     print(f"Средний рейтинг: {average}")
     age_stats = catalog_age_stats(movies)
@@ -243,4 +242,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    build_report(movies)
